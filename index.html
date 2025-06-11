@@ -1,176 +1,241 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahamed og Prashun Quiz - Lovleg</title>
-    <style>
-        body {
-            background-color: #d8d6dd;
-            font-size: 24px;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mahamed og Prashun Quiz – Lovleg</title>
+  <style>
+    body {
+      background-color: #0b1d3a;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-        .quiz-container {
-            width: 50%;
-            margin: auto;
-            padding: 20px;
-            border: 2px solid #333;
-            border-radius: 10px;
-        }
+    .quiz-container {
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      text-align: left;
+    }
 
-        .result {
-            display: none;
-            padding: 20px;
-            font-size: 50px;
-            font-weight: bold;
-        }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #111;
+    }
 
-        .correct {
-            color: green;
-        }
+    #question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
 
-        .wrong {
-            color: red;
-        }
+    #options button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
 
-        .final-result {
-            display: none;
-            margin-top: 20px;
-            font-size: 24px;
-        }
+    #options button:hover {
+      background-color: #eee;
+    }
 
-        button {
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 20px;
-            cursor: pointer;
-        }
-    </style>
+    .correct {
+      background-color: #c8f7c5 !important;
+      border-color: #2ecc71;
+    }
+
+    .wrong {
+      background-color: #f7c5c5 !important;
+      border-color: #e74c3c;
+    }
+
+    #next-btn {
+      display: block;
+      margin: 20px auto 0;
+      padding: 10px 25px;
+      font-size: 18px;
+      background-color: #0b1d3a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #final-result {
+      text-align: center;
+      font-size: 24px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <h1>Quiz om Lovleg</h1>
-        <div id="question"></div>
-        <div id="options"></div>
-        <button onclick="nextQuestion()">Neste</button>
-        <div id="result" class="result"></div>
-        <div id="final-result" class="final-result"></div>
-    </div>
+  <div class="quiz-container">
+    <h1>Quiz om Lovleg</h1>
+    <div id="question"></div>
+    <div id="options"></div>
+    <button id="next-btn" onclick="nextQuestion()">Neste</button>
+    <div id="final-result"></div>
+  </div>
 
-    <script>
-        const questions = [
-            {
-                question: "Kva heiter hovudpersonen i Lovleg?",
-                options: ["Gunnhild", "Sara", "Live", "Emilie"],
-                correct: "Gunnhild"
-            },
-            {
-                question: "Kva er det store som skjer med Gunnhild i episode 1?",
-                options: ["Ho blir saman med ein gut", "Ho flyttar på hybel", "Ho sluttar på skulen", "Ho vinn ein konkurranse"],
-                correct: "Ho flyttar på hybel"
-            },
-            {
-                question: "Kva handlar bursdagsepisoden om?",
-                options: ["Gunnhild vil ikkje feire", "Gunnhild får besøk heimanfrå", "Gunnhild har bursdag og mykje skjer rundt ho", "Sara lagar fest for seg sjølv"],
-                correct: "Gunnhild har bursdag og mykje skjer rundt ho"
-            },
-            {
-                question: "Kva er hovudtemaet i episoden 'Føle det i augneblinken'?",
-                options: ["Å vere sjuk", "Å få gode karakterar", "Kjensler og impulsive handlingar", "Hybelvask og reglar"],
-                correct: "Kjensler og impulsive handlingar"
-            },
-            {
-                question: "Kva skjer i episoden 'Kven som helst'?",
-                options: ["Gunnhild flyttar heim igjen", "Gunnhild prøver å forstå konsekvensane av det ho har gjort", "Gunnhild startar ein blogg", "Gunnhild mister mobilen"],
-                correct: "Gunnhild prøver å forstå konsekvensane av det ho har gjort"
-            },
-            {
-                question: "Kva heiter bestevenninna til Gunnhild som bur på hybelen hennar?",
-                options: ["Sara", "Line", "Emilie", "Maja"],
-                correct: "Sara"
-            },
-            {
-                question: "Korleis skildrar serien ungdomslivet på hybel?",
-                options: ["Overflatisk og dramatisk", "Ærleg, sårt og ekte", "Komisk og tullete", "Urealistisk og overdriven"],
-                correct: "Ærleg, sårt og ekte"
-            },
-            {
-                question: "Kva slags stemning får vi sjå i episoden 'Haustferie'?",
-                options: ["Mykje festing og støy", "Alvorlege tema som psykisk helse", "Ro, nærleik og overraskingar", "Krangel mellom hybelvenner"],
-                correct: "Ro, nærleik og overraskingar"
-            },
-            {
-                question: "Korleis endar sesong 1 av Lovleg?",
-                options: ["Gunnhild flyttar heim igjen", "Gunnhild bestemmer seg for å ta ansvar og bli verande", "Gunnhild slår opp med kjærasten", "Gunnhild søkjer ny skule"],
-                correct: "Gunnhild bestemmer seg for å ta ansvar og bli verande"
-            },
-            {
-                question: "Kvifor trur du serien heiter Lovleg?",
-                options: ["Fordi alt handlar om lovar", "Fordi ungdommar vil bryte reglar", "Fordi det handlar om å vere ekte og få vere seg sjølv", "Fordi det handlar om politiet"],
-                correct: "Fordi det handlar om å vere ekte og få vere seg sjølv"
-            }
-        ];
+  <script>
+    const questions = [
+      {
+        question: "Kva heiter hovudpersonen i Lovleg?",
+        options: ["Gunnhild", "Sara", "Live", "Emilie"],
+        correct: "Gunnhild",
+      },
+      {
+        question: "Kva er det store som skjer med Gunnhild i episode 1?",
+        options: [
+          "Ho blir saman med ein gut",
+          "Ho flyttar på hybel",
+          "Ho sluttar på skulen",
+          "Ho vinn ein konkurranse",
+        ],
+        correct: "Ho flyttar på hybel",
+      },
+      {
+        question: "Kva handlar bursdagsepisoden om?",
+        options: [
+          "Gunnhild vil ikkje feire",
+          "Gunnhild får besøk heimanfrå",
+          "Gunnhild har bursdag og mykje skjer rundt ho",
+          "Sara lagar fest for seg sjølv",
+        ],
+        correct: "Gunnhild har bursdag og mykje skjer rundt ho",
+      },
+      {
+        question: "Kva er hovudtemaet i episoden 'Føle det i augneblinken'?",
+        options: [
+          "Å vere sjuk",
+          "Å få gode karakterar",
+          "Kjensler og impulsive handlingar",
+          "Hybelvask og reglar",
+        ],
+        correct: "Kjensler og impulsive handlingar",
+      },
+      {
+        question: "Kva skjer i episoden 'Kven som helst'?",
+        options: [
+          "Gunnhild flyttar heim igjen",
+          "Gunnhild prøver å forstå konsekvensane av det ho har gjort",
+          "Gunnhild startar ein blogg",
+          "Gunnhild mister mobilen",
+        ],
+        correct: "Gunnhild prøver å forstå konsekvensane av det ho har gjort",
+      },
+      {
+        question: "Kva heiter bestevenninna til Gunnhild som bur på hybelen hennar?",
+        options: ["Sara", "Line", "Emilie", "Maja"],
+        correct: "Sara",
+      },
+      {
+        question: "Korleis skildrar serien ungdomslivet på hybel?",
+        options: [
+          "Overflatisk og dramatisk",
+          "Ærleg, sårt og ekte",
+          "Komisk og tullete",
+          "Urealistisk og overdriven",
+        ],
+        correct: "Ærleg, sårt og ekte",
+      },
+      {
+        question: "Kva slags stemning får vi sjå i episoden 'Haustferie'?",
+        options: [
+          "Mykje festing og støy",
+          "Alvorlege tema som psykisk helse",
+          "Ro, nærleik og overraskingar",
+          "Krangel mellom hybelvenner",
+        ],
+        correct: "Ro, nærleik og overraskingar",
+      },
+      {
+        question: "Korleis endar sesong 1 av Lovleg?",
+        options: [
+          "Gunnhild flyttar heim igjen",
+          "Gunnhild bestemmer seg for å ta ansvar og bli verande",
+          "Gunnhild slår opp med kjærasten",
+          "Gunnhild søkjer ny skule",
+        ],
+        correct: "Gunnhild bestemmer seg for å ta ansvar og bli verande",
+      },
+      {
+        question: "Kvifor trur du serien heiter Lovleg?",
+        options: [
+          "Fordi alt handlar om lovar",
+          "Fordi ungdommar vil bryte reglar",
+          "Fordi det handlar om å vere ekte og få vere seg sjølv",
+          "Fordi det handlar om politiet",
+        ],
+        correct: "Fordi det handlar om å vere ekte og få vere seg sjølv",
+      },
+    ];
 
-        let currentQuestion = 0;
-        let correctAnswers = 0;
+    let currentQuestion = 0;
+    let correctAnswers = 0;
 
-        function loadQuestion() {
-            document.getElementById("result").style.display = "none";
+    function loadQuestion() {
+      const questionEl = document.getElementById("question");
+      const optionsEl = document.getElementById("options");
+      questionEl.innerText = questions[currentQuestion].question;
+      optionsEl.innerHTML = "";
 
-            const questionContainer = document.getElementById("question");
-            questionContainer.innerHTML = "";
+      questions[currentQuestion].options.forEach((option) => {
+        const btn = document.createElement("button");
+        btn.innerText = option;
+        btn.onclick = () => checkAnswer(btn, option);
+        optionsEl.appendChild(btn);
+      });
+    }
 
-            const current = questions[currentQuestion];
-
-            const questionText = document.createElement("div");
-            questionText.innerText = current.question;
-            questionContainer.appendChild(questionText);
-
-            const optionsDiv = document.getElementById("options");
-            optionsDiv.innerHTML = "";
-
-            current.options.forEach(option => {
-                let btn = document.createElement("button");
-                btn.innerText = option;
-                btn.onclick = () => checkAnswer(option);
-                optionsDiv.appendChild(btn);
-            });
+    function checkAnswer(button, answer) {
+      const buttons = document.querySelectorAll("#options button");
+      buttons.forEach((btn) => {
+        btn.disabled = true;
+        if (btn.innerText === questions[currentQuestion].correct) {
+          btn.classList.add("correct");
         }
-
-        function checkAnswer(answer) {
-            let resultDiv = document.getElementById("result");
-            if (answer === questions[currentQuestion].correct) {
-                resultDiv.innerText = "Riktig!";
-                resultDiv.className = "result correct";
-                correctAnswers++;
-            } else {
-                resultDiv.innerText = "Feil, prøv igjen!";
-                resultDiv.className = "result wrong";
-            }
-            resultDiv.style.display = "block";
+        if (btn.innerText === answer && answer !== questions[currentQuestion].correct) {
+          btn.classList.add("wrong");
         }
+      });
 
-        function nextQuestion() {
-            if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                loadQuestion();
-            } else {
-                showFinalResult();
-            }
-        }
+      if (answer === questions[currentQuestion].correct) {
+        correctAnswers++;
+      }
+    }
 
-        function showFinalResult() {
-            document.querySelector(".quiz-container").innerHTML = `
-                <h1>Quiz ferdig!</h1>
-                <p>Du fekk ${correctAnswers} av ${questions.length} riktige.</p>
-                <p>Takk for at du spelte!</p>
-                <a href="https://tv.nrk.no/serie/lovleg" target="_blank">Klikk her hvis du vil se på serien!</a>
-            `;
-        }
-
+    function nextQuestion() {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
         loadQuestion();
-    </script>
+      } else {
+        showFinalResult();
+      }
+    }
+
+    function showFinalResult() {
+      document.querySelector(".quiz-container").innerHTML = `
+        <h1>Quiz ferdig!</h1>
+        <p id="final-result">Du fekk ${correctAnswers} av ${questions.length} riktige.</p>
+      `;
+    }
+
+    loadQuestion();
+  </script>
 </body>
 </html>
